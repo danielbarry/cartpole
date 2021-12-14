@@ -61,6 +61,9 @@ class DQNSolver:
 
 
 def cartpole():
+    # Seed the random number generator to ensure results are repeatable
+    random.seed(0)
+    np.random.seed(0)
     env = gym.make(ENV_NAME)
     score_logger = ScoreLogger(ENV_NAME)
     observation_space = env.observation_space.shape[0]
