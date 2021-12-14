@@ -4,7 +4,7 @@ import numpy as np
 from collections import deque
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
-from tensorflow.keras.optimizers import adam_v2
+from keras.optimizers import adam_v2
 
 
 from scores.score_logger import ScoreLogger
