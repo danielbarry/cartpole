@@ -4,7 +4,7 @@ import numpy as np
 from collections import deque
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
-from keras.optimizers import adam_v2
+from tensorflow.keras.optimizers import Adam
 
 
 from scores.score_logger import ScoreLogger
@@ -34,7 +34,7 @@ class DQNSolver:
         self.model.add(Dense(24, input_shape=(observation_space,), activation="relu"))
         self.model.add(Dense(24, activation="relu"))
         self.model.add(Dense(self.action_space, activation="linear"))
-        self.model.compile(loss="mse", optimizer=adam_v2.Adam(learning_rate=LEARNING_RATE))
+        self.model.compile(loss="mse", optimizer=Adam(learning_rate=LEARNING_RATE))
 
     def remember(self, state, action, reward, next_state, done):
         self.memory.append((state, action, reward, next_state, done))
