@@ -95,7 +95,10 @@ class ScoreLogger:
             plt.legend(loc="upper left")
 
         plt.savefig(output_path, bbox_inches="tight")
-        plt.close()
+        plt.cla()
+        plt.figure().clear()
+        plt.clf()
+        plt.close('all')
 
     def _save_csv(self, path, score):
         if not os.path.exists(path):
