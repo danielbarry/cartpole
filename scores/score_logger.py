@@ -66,6 +66,12 @@ class ScoreLogger:
         plt.subplots()
         plt.plot(x, y, label="score per run")
 
+        if len(x) >= average_of_n_last :
+            y_max_roll = self.max_rolling(np.array([y]), average_of_n_last, 2).tolist()[0]
+            y_min_roll = self.min_rolling(np.array([y]), average_of_n_last, 2).tolist()[0]
+            plt.plot(x[0:len(y_max_roll)], y_max_roll, label="average max")
+            plt.plot(x[0:len(y_min_roll)], y_min_roll, label="average min")
+
         average_range = average_of_n_last if average_of_n_last is not None else len(x)
         plt.plot(x[-average_range:], [np.mean(y[-average_range:])] * len(y[-average_range:]), linestyle="--", label="last " + str(average_range) + " runs average")
 
@@ -96,3 +102,17 @@ class ScoreLogger:
         with scores_file:
             writer = csv.writer(scores_file)
             writer.writerow([score])
+
+    # Source: https://stackoverflow.com/a/52219082/2847743
+    def max_rolling(self, a, window, axis=1):
+        shape = a.shape[:-1] + (a.shape[-1] - window + 1, window)
+        strides = a.strides + (a.strides[-1],)
+        rolling = np.lib.stride_tricks.as_strided(a, shape=shape, strides=strides)
+        return np.max(rolling,axis=axis)
+
+    # Source: https://stackoverflow.com/a/52219082/2847743
+    def min_rolling(self, a, window, axis=1):
+        shape = a.shape[:-1] + (a.shape[-1] - window + 1, window)
+        strides = a.strides + (a.strides[-1],)
+        rolling = np.lib.stride_tricks.as_strided(a, shape=shape, strides=strides)
+        return np.min(rolling,axis=axis)
