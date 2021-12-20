@@ -67,7 +67,7 @@ class ScoreLogger:
         plt.figure().set_size_inches(8, 6)
         plt.plot(x, y, label="score per run")
 
-        if len(x) >= average_of_n_last :
+        if type(x) != type(None) and show_trend and len(x) >= average_of_n_last :
             y_max_roll = self.max_rolling(np.array([y]), average_of_n_last, 2).tolist()[0]
             y_min_roll = self.min_rolling(np.array([y]), average_of_n_last, 2).tolist()[0]
             plt.plot(x[0:len(y_max_roll)], y_max_roll, label="average max")
