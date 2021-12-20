@@ -69,7 +69,9 @@ class ScoreLogger:
 
         if type(x) != type(None) and show_trend and len(x) >= average_of_n_last :
             y_max_roll = self.max_rolling(np.array([y]), average_of_n_last, 2).tolist()[0]
+            y_max_roll = self.avg_rolling(y_max_roll, average_of_n_last)
             y_min_roll = self.min_rolling(np.array([y]), average_of_n_last, 2).tolist()[0]
+            y_min_roll = self.avg_rolling(y_min_roll, average_of_n_last)
             plt.plot(x[0:len(y_max_roll)], y_max_roll, label="average max")
             plt.plot(x[0:len(y_min_roll)], y_min_roll, label="average min")
 
@@ -117,3 +119,8 @@ class ScoreLogger:
         strides = a.strides + (a.strides[-1],)
         rolling = np.lib.stride_tricks.as_strided(a, shape=shape, strides=strides)
         return np.min(rolling,axis=axis)
+
+    # Source: https://stackoverflow.com/a/69950033/2847743
+    def avg_rolling(self, a, n):
+        N = len(a)
+        return np.array([np.mean(a[i : i + n]) for i in np.arange(0, N - n + 1)])
