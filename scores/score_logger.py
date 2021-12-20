@@ -64,6 +64,7 @@ class ScoreLogger:
                 y.append(int(data[i][0]))
 
         plt.subplots()
+        plt.figure().set_size_inches(8, 6)
         plt.plot(x, y, label="score per run")
 
         if len(x) >= average_of_n_last :
