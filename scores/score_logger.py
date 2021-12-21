@@ -74,8 +74,8 @@ class ScoreLogger:
             y_min_roll = self.min_rolling(np.array([y]), average_of_n_last, 2).tolist()[0]
             y_min_roll = self.avg_rolling(y_min_roll, average_of_n_last)
             plt.plot(x[-len(y_avg_roll):], y_avg_roll, label="average rolling")
-            plt.plot(x[-len(y_max_roll):], y_max_roll, label="average max")
-            plt.plot(x[-len(y_min_roll):], y_min_roll, label="average min")
+            plt.plot(x[average_of_n_last:len(y_max_roll)+average_of_n_last], y_max_roll, label="average max")
+            plt.plot(x[average_of_n_last:len(y_min_roll)+average_of_n_last], y_min_roll, label="average min")
 
         average_range = average_of_n_last if average_of_n_last is not None else len(x)
         plt.plot(x[-average_range:], [np.mean(y[-average_range:])] * len(y[-average_range:]), linestyle="--", label="last " + str(average_range) + " runs average")
